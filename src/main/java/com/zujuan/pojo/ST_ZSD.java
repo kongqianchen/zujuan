@@ -1,9 +1,9 @@
 package com.zujuan.pojo;
 
 public class ST_ZSD extends ST_ZSDKey {
-    private Boolean statusReview;
+    private Integer statusReview;
 
-    public ST_ZSD(Integer pointId, Integer shitiId, Boolean statusReview) {
+    public ST_ZSD(Integer pointId, Integer shitiId, Integer statusReview) {
         super(pointId, shitiId);
         this.statusReview = statusReview;
     }
@@ -12,11 +12,11 @@ public class ST_ZSD extends ST_ZSDKey {
         super();
     }
 
-    public Boolean getStatusReview() {
+    public Integer getStatusReview() {
         return statusReview;
     }
 
-    public void setStatusReview(Boolean statusReview) {
+    public void setStatusReview(Integer statusReview) {
         this.statusReview = statusReview;
     }
 }

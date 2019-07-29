@@ -2,20 +2,13 @@ package com.zujuan.controller.protal;
 
 import com.alibaba.fastjson.JSONObject;
 import com.aliyun.message.GetCodeUtils;
-import com.aliyun.message.HandlerMessage;
-import com.aliyun.message.SendSMS;
-import com.aliyuncs.CommonResponse;
-import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.zujuan.common.Const;
-import com.zujuan.common.ResponseCode;
 import com.zujuan.common.ServerResponse;
 import com.zujuan.pojo.User;
 import com.zujuan.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -75,7 +68,7 @@ public class UserController {
 //        return HandlerMessage.sendSMS(phoneNum, request);
         String code = GetCodeUtils.getCode();
         // todo sms
-        CommonResponse response = .sendSms(phoneNum,code);
+        //CommonResponse response = .sendSms(phoneNum,code);
 //        if(response.getHttpStatus() != null && sendSmsResponse.getCode().equals("OK")){
             //验证码发送成功
             //将验证码存入session中，同时存入创建时间

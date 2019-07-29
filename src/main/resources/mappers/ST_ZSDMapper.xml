@@ -5,7 +5,7 @@
     <constructor>
       <idArg column="point_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <idArg column="shiti_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="status_review" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="status_review" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
@@ -26,7 +26,8 @@
   <insert id="insert" parameterType="com.zujuan.pojo.ST_ZSD">
     insert into tb_st_zsd (point_id, shiti_id, status_review
       )
-    values (#{pointId,jdbcType=INTEGER}, #{shitiId,jdbcType=INTEGER}, #{statusReview,jdbcType=BIT}
+    values (#{pointId,jdbcType=INTEGER}, #{shitiId,jdbcType=INTEGER},
+    #{statusReview,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zujuan.pojo.ST_ZSD">
@@ -50,7 +51,7 @@
         #{shitiId,jdbcType=INTEGER},
       </if>
       <if test="statusReview != null">
-        #{statusReview,jdbcType=BIT},
+        #{statusReview,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -58,7 +59,7 @@
     update tb_st_zsd
     <set>
       <if test="statusReview != null">
-        status_review = #{statusReview,jdbcType=BIT},
+        status_review = #{statusReview,jdbcType=INTEGER},
       </if>
     </set>
     where point_id = #{pointId,jdbcType=INTEGER}
@@ -66,7 +67,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zujuan.pojo.ST_ZSD">
     update tb_st_zsd
-    set status_review = #{statusReview,jdbcType=BIT}
+    set status_review = #{statusReview,jdbcType=INTEGER}
     where point_id = #{pointId,jdbcType=INTEGER}
       and shiti_id = #{shitiId,jdbcType=INTEGER}
   </update>

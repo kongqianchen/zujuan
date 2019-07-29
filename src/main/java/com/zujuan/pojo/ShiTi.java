@@ -13,7 +13,7 @@ public class ShiTi {
 
     private Integer referenceTime;
 
-    private Date years;
+    private String years;
 
     private String city;
 
@@ -27,7 +27,9 @@ public class ShiTi {
 
     private Date commitTime;
 
-    public ShiTi(Integer shitiId, String tixing, String tilei, String nandu, Integer referenceTime, Date years, String city, String source, String problem, String answer, String analysis, Date commitTime) {
+    public ShiTi(Integer shitiId, String tixing, String tilei, String nandu,
+                 Integer referenceTime, String years, String city, String source, String problem,
+                 String answer, String analysis, Date commitTime) {
         this.shitiId = shitiId;
         this.tixing = tixing;
         this.tilei = tilei;
@@ -86,11 +88,11 @@ public class ShiTi {
         this.referenceTime = referenceTime;
     }
 
-    public Date getYears() {
+    public String getYears() {
         return years;
     }
 
-    public void setYears(Date years) {
+    public void setYears(String years) {
         this.years = years;
     }
 

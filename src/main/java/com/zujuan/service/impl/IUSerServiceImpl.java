@@ -114,7 +114,7 @@ public class IUSerServiceImpl implements IUserService {
         }
 
         //todo  密码登录MD5
-       // credential = MD5Util.MD5EncodeUtf8(credential);
+        credential = MD5Util.MD5EncodeUtf8(credential);
 
         User user = userMapper.LoginByPhoneNumAndCredential(userPhone, credential);
         if (user == null) {
