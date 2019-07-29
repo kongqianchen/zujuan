@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zujuan.dao.ST_ZSDMapper">
+  <resultMap id="BaseResultMap" type="com.zujuan.pojo.ST_ZSD">
+    <constructor>
+      <idArg column="point_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="shiti_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="status_review" javaType="java.lang.Boolean" jdbcType="BIT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    point_id, shiti_id, status_review
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.zujuan.pojo.ST_ZSDKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_st_zsd
+    where point_id = #{pointId,jdbcType=INTEGER}
+      and shiti_id = #{shitiId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.zujuan.pojo.ST_ZSDKey">
+    delete from tb_st_zsd
+    where point_id = #{pointId,jdbcType=INTEGER}
+      and shiti_id = #{shitiId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zujuan.pojo.ST_ZSD">
+    insert into tb_st_zsd (point_id, shiti_id, status_review
+      )
+    values (#{pointId,jdbcType=INTEGER}, #{shitiId,jdbcType=INTEGER}, #{statusReview,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zujuan.pojo.ST_ZSD">
+    insert into tb_st_zsd
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pointId != null">
+        point_id,
+      </if>
+      <if test="shitiId != null">
+        shiti_id,
+      </if>
+      <if test="statusReview != null">
+        status_review,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pointId != null">
+        #{pointId,jdbcType=INTEGER},
+      </if>
+      <if test="shitiId != null">
+        #{shitiId,jdbcType=INTEGER},
+      </if>
+      <if test="statusReview != null">
+        #{statusReview,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zujuan.pojo.ST_ZSD">
+    update tb_st_zsd
+    <set>
+      <if test="statusReview != null">
+        status_review = #{statusReview,jdbcType=BIT},
+      </if>
+    </set>
+    where point_id = #{pointId,jdbcType=INTEGER}
+      and shiti_id = #{shitiId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zujuan.pojo.ST_ZSD">
+    update tb_st_zsd
+    set status_review = #{statusReview,jdbcType=BIT}
+    where point_id = #{pointId,jdbcType=INTEGER}
+      and shiti_id = #{shitiId,jdbcType=INTEGER}
+  </update>
+</mapper>

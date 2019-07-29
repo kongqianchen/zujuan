@@ -1,0 +1,339 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>demo</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <script type="text/javascript" charset="utf-8" src="utf8-jsp/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="utf8-jsp/ueditor.all.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="utf8-jsp/lang/zh-cn/zh-cn.js"></script>
+	<script type="text/javascript" charset="utf-8" src="utf8-jsp/jquery-3.1.1.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="utf8-jsp/auto.css" />
+	<script src="utf8-jsp/auto.js"></script>
+    <style type="text/css">
+        *{
+            margin:0;
+            parding:0;
+        }
+    </style>
+</head>
+<body>
+<div id="box" style="width: 100%;height: 100%;">
+<form id="Form" action="/zujuan/shiti/submit.do" method="post" onsubmit="return checkForm();">
+	<div class="timu" style="height:200px;" >
+		<h1>题目：</h1><script type="text/plain" id="problem" name="problem" ></script>
+	</div>
+	<br>
+	<div class="daan" style="height:200px;">
+		<h1>答案：</h1><script type="text/plain" id="answer" name="answer" ></script>
+	</div>
+	<br>
+	<div class="jiexi" style="height:200px;">
+		<h1>解析：</h1><script type="text/plain" id="analysis" name="analysis"></script>
+	</div>
+	<br>
+	<div class="tiaojian">
+		题型：
+		<select id="queType" name="queType">
+  			<option value ="1">选择</option>
+  			<option value ="2">判断</option>
+		</select>
+		题类：
+		<select id="subClass" name="subClass">
+  			<option value ="1">模拟题</option>
+  			<option value ="2">高考题</option>
+  			<option value ="3">期末题</option>
+		</select>
+		难度：
+		<select id="difficult" name="difficult">
+  			<option value ="1">普通</option>
+  			<option value ="2">中等</option>
+  			<option value ="3">难度</option>
+		</select>
+
+		<!--难度：<input type="text" id="difficult" name="difficult">-->
+		年份：<input type="text" id="years" name="years">
+		城市：<input type="text" id="city" name="city">
+		试题来源：<input type="text" id="source" name="source">
+		<!--知识点：<input type="text" id="point_name" name="point_name">-->
+		<input id="submit" type="submit" value="提交">
+	</div>
+</form>
+	<!-- <div class="wrap">		
+		知识点<input type="text" id="ZhiShiDian" class="auto-inp">		
+		<div class="auto hidden" id="auto">			
+			<div class="auto_out">1</div>			
+			<div class="auto_out">2</div>		
+		</div>	
+	</div>
+	<div id="left" style="float:left; width: 40%;height: 100%;line-height:100%; display:inline;">
+	
+   		<script id="editor" name="editir" type="text/plain" style="height:815px;"></script>
+    	<input id="but" type="button" onclick="get()" value="预览" />
+    	<input id="but1" type="button" onclick="clearShuju()" value="清空" />
+    	<input id="but2" type="button" onclick="zhuan()" style="display:none;" value="图片转base64编码" />
+    	<input id="but3" type="button" onclick="submitTimu()" value="提交题目" />
+    	<input id="but4" type="button" onclick="submitDaAn()" value="提交答案" />
+    	<input id="but5" type="button" onclick="submitJieXi()" value="提交解析" />
+	</div>
+	<div id="right" style="float:left; width: 49%;height: 100%; margin-left:1%; display:inline;margin-top:5%;">
+		<p id="p1"></p>
+	</div> -->
+</div>
+
+<!-- <script src="auto.js"></script> -->
+<script type="text/javascript">
+    //实例化编辑器
+    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+    var ue1 = UE.getEditor('problem');
+    var ue2 = UE.getEditor('answer');
+    var ue3 = UE.getEditor('analysis');
+    function isFocus(e){
+        alert(UE.getEditor('editor').isFocus());
+        UE.dom.domUtils.preventDefault(e)
+    }
+    function setblur(e){
+        UE.getEditor('editor').blur();
+        UE.dom.domUtils.preventDefault(e)
+    }
+    function insertHtml() {
+        var value = prompt('插入html代码', '');
+        UE.getEditor('editor').execCommand('insertHtml', value)
+    }
+    function createEditor() {
+        enableBtn();
+        UE.getEditor('editor');
+    }
+    function getAllHtml() {
+        alert(UE.getEditor('editor').getAllHtml())
+    }
+    function getContent() {
+        var arr = [];
+        arr.push("使用editor.getContent()方法可以获得编辑器的内容");
+        arr.push("内容为：");
+        arr.push(UE.getEditor('editor').getContent());
+        alert(arr.join("\n"));
+    }
+    function getPlainTxt() {
+        var arr = [];
+        arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
+        arr.push("内容为：");
+        arr.push(UE.getEditor('editor').getPlainTxt());
+        alert(arr.join('\n'))
+    }
+    function setContent(isAppendTo) {
+        var arr = [];
+        arr.push("使用editor.setContent('欢迎使用ueditor')方法可以设置编辑器的内容");
+        UE.getEditor('editor').setContent('欢迎使用ueditor', isAppendTo);
+        alert(arr.join("\n"));
+    }
+    function setDisabled() {
+        UE.getEditor('editor').setDisabled('fullscreen');
+        disableBtn("enable");
+    }
+
+    function setEnabled() {
+        UE.getEditor('editor').setEnabled();
+        enableBtn();
+    }
+
+    function getText() {
+        //当你点击按钮时编辑区域已经失去了焦点，如果直接用getText将不会得到内容，所以要在选回来，然后取得内容
+        var range = UE.getEditor('editor').selection.getRange();
+        range.select();
+        var txt = UE.getEditor('editor').selection.getText();
+        alert(txt)
+    }
+
+    function getContentTxt() {
+        var arr = [];
+        arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
+        arr.push("编辑器的纯文本内容为：");
+        arr.push(UE.getEditor('editor').getContentTxt());
+        alert(arr.join("\n"));
+    }
+    function hasContent() {
+        var arr = [];
+        arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
+        arr.push("判断结果为：");
+        arr.push(UE.getEditor('editor').hasContents());
+        alert(arr.join("\n"));
+    }
+    function setFocus() {
+        UE.getEditor('editor').focus();
+    }
+    function deleteEditor() {
+        disableBtn();
+        UE.getEditor('editor').destroy();
+    }
+    function disableBtn(str) {
+        var div = document.getElementById('btns');
+        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+        for (var i = 0, btn; btn = btns[i++];) {
+            if (btn.id == str) {
+                UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+            } else {
+                btn.setAttribute("disabled", "true");
+            }
+        }
+    }
+    function enableBtn() {
+        var div = document.getElementById('btns');
+        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+        for (var i = 0, btn; btn = btns[i++];) {
+            UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+        }
+    }
+
+    function getLocalData () {
+        alert(UE.getEditor('editor').execCommand( "getlocaldata" ));
+    }
+
+    function clearLocalData () {
+        UE.getEditor('editor').execCommand( "clearlocaldata" );
+        alert("已清空草稿箱")
+    }
+    //清空编辑内容
+    /* function clearShuju(){
+    	document.getElementById("p1").innerHTML="";
+    	UE.getEditor('editor').setContent("");
+      	
+    } */
+    //加入时间周期函数
+    //setInterval(function get(){
+    //	var lt = UE.getEditor('editor').getContent();//获得编辑器中的HTML内容
+    //	document.getElementById("p1").innerHTML=lt;
+    	/* if(lt.indexOf('src="')!=-1){//判断是否有图片
+			var newlt = (lt.split('src="')[1]).split('"')[0];//获取到图片的src地址
+		
+        	var imgLink = newlt;
+        	var tempImage = new Image();
+        	tempImage.src = imgLink;
+        	tempImage.crossOrigin = "*";
+        	tempImage.onload = function(){
+        		var base64 = getBase64Image(tempImage);//调用转换base64函数，图片变成base64格式
+        		var lt = UE.getEditor('editor').getContent();
+    			document.getElementById("p1").innerHTML=lt.replace(newlt,base64);//预览框内用base64显示
+        	}
+    	}
+    	if(escape(lt).indexOf("%u")){//判断是否有文本输入 */
+    	//	var lt = UE.getEditor('editor').getContent();
+    	
+    	//}
+    //},700);
+    //function get(){//预览按钮
+    //	var lt = UE.getEditor('editor').getContent();
+    //	document.getElementById("p1").innerHTML=lt;
+		
+    //	alert(lt);
+    //}
+	/* function getBase64Image(img) {//转base64函数
+		var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();
+        var dataURL = canvas.toDataURL("image/"+ext);
+        return dataURL;
+    } */
+	//知识点联想功能
+	/* var array = ['七里香','b0','b12','b22','b3',
+		'b4','b5','b6','如果爱','b7','b8',
+		'b2','abd','ab','acd','accd',
+		'abd','qq音乐','b1','cd','ccd',
+		'cbcv','小王子','cxf','b0'];
+	var autoComplete = new AutoComplete("ZhiShiDian","auto",array);
+	document.getElementById("ZhiShiDian").onkeyup = function(event){
+		autoComplete.start(event);
+	} */
+	
+	/* function zhuan(){
+    	var lt = UE.getEditor('editor').getContent();//获得编辑器中的HTML内容
+    	if(lt.indexOf('src="')!=-1){//判断是否有图片
+			var newlt = (lt.split('src="')[1]).split('"')[0];//获取到图片的src地址
+			
+        	var imgLink = newlt;
+        	var tempImage = new Image();
+        	tempImage.src = imgLink;
+        	tempImage.crossOrigin = "*";
+        	tempImage.onload = function(){
+        		var base64 = getBase64Image(tempImage);//调用转换base64函数，图片变成base64格式
+        		//判断文件流大小
+        		var str = base64.substring(22);
+        		var equalIndex = str.indexOf("=");
+        		if(str.indexOf("=")>0){
+        			str = str.substring(0,equalIndex);
+        		}
+        		var strLength = str.length;
+        		var size = strLength-(strLength/8)*2;
+        		if((size/1024)<20){//如果文件流小于20k就进行转base64
+        			var lt = UE.getEditor('editor').getContent();
+    				document.getElementById("p1").innerHTML=lt.replace(newlt,base64);//预览框内用base64显示
+        		}
+        		else{//如果大于20k就以文件的形式存
+        			var lt = UE.getEditor('editor').getContent();
+    				document.getElementById("p1").innerHTML=lt;
+        		}
+        	}
+    	}
+    	if(escape(lt).indexOf("%u")){//判断是否有文本输入
+    		var lt = UE.getEditor('editor').getContent();
+    		document.getElementById("p1").innerHTML=lt;
+    	}
+    } */
+/*     function submitTimu(){
+    	var Timu = UE.getEditor('editor').getContent();
+    	var args = {
+    			"Timu" : Timu,
+    			"time" : new Date()
+    	};
+    	var url = "TimuDisplay/submitTimu.action";
+    	$.get(url:url,data:args, function(data){
+    		alert("提交题目成功！");
+    	},"json");
+    }
+    function submitDaAn(){
+    	var DaAn = UE.getEditor('editor').getContent();
+    	var args = {
+    			"DaAn" : DaAn,
+    			"time" : new Date()
+    	};
+    	var url = "DaAnDisplay-submitDaAn.action";
+    	$.getJSON(url, args, function(data){
+    		alert("提交答案成功！");
+    	});
+    }
+    function submitJieXi(){
+    	var JieXi = UE.getEditor('editor').getContent();
+    	var args = {
+    			"JieXi" : JieXi,
+    			"time" : new Date()
+    	};
+    	var url = "JieXiDisplay-submitJieXi.action";
+    	$.getJSON(url, args, function(data){
+    		alert("提交答案解析成功！");
+    	});
+    } */
+    function checkForm(){
+    	var problem = UE.getEditor('problem').getContent();
+    	var answer = UE.getEditor('answer').getContent();
+    	var analysis = UE.getEditor('analysis').getContent();
+    	var queType = document.getElementById("queType");
+    	var subClass = document.getElementById("subClass");
+    	var difficult = document.getElementById("difficult");
+    	<!--var years = document.getElementById("years");-->
+    	var city = document.getElementById("city");
+    	var source = document.getElementById("source");
+    	<!--var point_name = document.getElementById("point_name");-->
+    	if(problem=="" || answer=="" || analysis=="" || queType=="" || subClass=="" || difficult=="" ||  city=="" || source==""){
+    		alert("不能为空！");
+    		return false;
+    	}
+    	else{
+    		return true;
+    	}
+    }
+</script>
+</body>
+</html>
