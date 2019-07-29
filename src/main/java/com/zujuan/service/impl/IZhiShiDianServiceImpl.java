@@ -21,14 +21,15 @@ import java.util.Set;
  * @Date 2019/7/23 10:23
  */
 @Service("iZhiShiDianSrevice")
-public class ZhiShiDianServiceImpl implements IZhiShiDianService {
-    private Logger logger = LoggerFactory.getLogger(ZhiShiDianServiceImpl.class);
+public class IZhiShiDianServiceImpl implements IZhiShiDianService {
+    private Logger logger = LoggerFactory.getLogger(IZhiShiDianServiceImpl.class);
 
     @Autowired
     private ZhiShiDianMapper zhiShiDianMapper;
 
     /**
      * 根据字符串匹配知识点
+     *
      * @param pointName
      * @return
      */
@@ -49,27 +50,26 @@ public class ZhiShiDianServiceImpl implements IZhiShiDianService {
 
     /**
      * 添加知识点
-     * todo 用户权限判断
+     * todo 权限
      *
      * @param pointName
-     * @param parentId
      * @return
      */
     @Override
-    public ServerResponse addZhiShiDian(String pointName, Integer parentId) {
-        if (parentId == null || StringUtils.isBlank(pointName)) {
+    public ServerResponse<ZhiShiDian> addZhiShiDian(String pointName) {
+        if (StringUtils.isBlank(pointName)) {
             return ServerResponse.createByErrorMessage("添加知识点参数错误");
         }
 
         ZhiShiDian zhiShiDian = new ZhiShiDian();
         zhiShiDian.setPointName(pointName);
-        zhiShiDian.setParentId(parentId);
+        zhiShiDian.setParentId(null);
         zhiShiDian.setStatusResult(false);
         int rowCount = zhiShiDianMapper.insert(zhiShiDian);
-        if (rowCount > 0) {
-            return ServerResponse.createBySuccessMessage("添加知识点成功");
+        if (rowCount <= 0) {
+            return ServerResponse.createByErrorMessage("添加知识点成功");
         }
-        return ServerResponse.createBySuccessMessage("添加知识点失败");
+        return ServerResponse.createBySuccess("添加知识点失败", zhiShiDian);
     }
 
     /**

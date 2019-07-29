@@ -149,7 +149,7 @@
       identity_type = #{identityType,jdbcType=VARCHAR},
       identifier = #{identifier,jdbcType=VARCHAR},
       credential = #{credential,jdbcType=VARCHAR},
-      permission = #{permission,jdbcType=INTEFGER}
+      permission = #{permission,jdbcType=INTEGER}
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
   <select id="checkUserPhone" resultType="java.lang.Integer" parameterType="java.lang.String">

@@ -10,7 +10,7 @@ import java.util.List;
  * @Date 2019/7/23 10:22
  */
 public interface IZhiShiDianService {
-    ServerResponse addZhiShiDian(String pointName, Integer parentId);
+    ServerResponse<ZhiShiDian> addZhiShiDian(String pointName);
 
     ServerResponse updateZhiShiDian(Integer pointId, String pointName);
 

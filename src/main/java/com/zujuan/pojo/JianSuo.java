@@ -13,18 +13,7 @@ public class JianSuo {
 
     private Integer pointId;
 
-    public JianSuo(Integer jiansuoId, String dengji, String xueke, String nianji, String zhangjie, Integer pointId) {
-        this.jiansuoId = jiansuoId;
-        this.dengji = dengji;
-        this.xueke = xueke;
-        this.nianji = nianji;
-        this.zhangjie = zhangjie;
-        this.pointId = pointId;
-    }
-
-    public JianSuo() {
-        super();
-    }
+    private String pointName;
 
     public Integer getJiansuoId() {
         return jiansuoId;
@@ -39,7 +28,7 @@ public class JianSuo {
     }
 
     public void setDengji(String dengji) {
-        this.dengji = dengji == null ? null : dengji.trim();
+        this.dengji = dengji;
     }
 
     public String getXueke() {
@@ -47,7 +36,7 @@ public class JianSuo {
     }
 
     public void setXueke(String xueke) {
-        this.xueke = xueke == null ? null : xueke.trim();
+        this.xueke = xueke;
     }
 
     public String getNianji() {
@@ -55,7 +44,7 @@ public class JianSuo {
     }
 
     public void setNianji(String nianji) {
-        this.nianji = nianji == null ? null : nianji.trim();
+        this.nianji = nianji;
     }
 
     public String getZhangjie() {
@@ -63,7 +52,7 @@ public class JianSuo {
     }
 
     public void setZhangjie(String zhangjie) {
-        this.zhangjie = zhangjie == null ? null : zhangjie.trim();
+        this.zhangjie = zhangjie;
     }
 
     public Integer getPointId() {
@@ -72,5 +61,13 @@ public class JianSuo {
 
     public void setPointId(Integer pointId) {
         this.pointId = pointId;
+    }
+
+    public String getPointName() {
+        return pointName;
+    }
+
+    public void setPointName(String pointName) {
+        this.pointName = pointName;
     }
 }

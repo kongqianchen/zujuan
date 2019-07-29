@@ -3,32 +3,32 @@
 <mapper namespace="com.zujuan.dao.ShiTiMapper">
   <resultMap id="BaseResultMap" type="com.zujuan.pojo.ShiTi">
     <constructor>
-      <idArg column="shiti_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="que_type" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="sub_class" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="difficult" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="number_sets" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="years" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="city" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="source" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="problem" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="answer" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="analysis" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="commit_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <idArg column="shiti_id" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+      <arg column="tixing" javaType="java.lang.String" jdbcType="VARCHAR"/>
+      <arg column="tilei" javaType="java.lang.String" jdbcType="VARCHAR"/>
+      <arg column="nandu" javaType="java.lang.String" jdbcType="VARCHAR"/>
+      <arg column="reference_time" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+      <arg column="years" javaType="java.lang.String" jdbcType="VARCHAR"/>
+      <arg column="city" javaType="java.lang.String" jdbcType="VARCHAR"/>
+      <arg column="source" javaType="java.lang.String" jdbcType="VARCHAR"/>
+      <arg column="problem" javaType="java.lang.String" jdbcType="VARCHAR"/>
+      <arg column="answer" javaType="java.lang.String" jdbcType="VARCHAR"/>
+      <arg column="analysis" javaType="java.lang.String" jdbcType="VARCHAR"/>
+      <arg column="commit_time" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    shiti_id, que_type, sub_class, difficult, number_sets, years, city, source, problem, 
+    shiti_id, tixing, tilei, nandu, reference_time, years, city, source, problem,
     answer, analysis, commit_time
   </sql>
   <insert id="insert" parameterType="com.zujuan.pojo.ShiTi">
-    insert into tb_shiti (shiti_id, que_type, sub_class, 
-      difficult, number_sets, years,
-      city, source, problem, 
+    insert into tb_shiti (shiti_id, tixing, tilei,
+      nandu, reference_time, years,
+      city, source, problem,
       answer, analysis, commit_time
       )
-    values (#{shitiId,jdbcType=INTEGER}, #{queType,jdbcType=VARCHAR}, #{subClass,jdbcType=VARCHAR}, 
-      #{difficult,jdbcType=VARCHAR}, #{numberSets,jdbcType=INTEGER}, #{years,jdbcType=VARCHAR},
+    values (#{shitiId,jdbcType=INTEGER}, #{tixing,jdbcType=VARCHAR}, #{tilei,jdbcType=VARCHAR},
+      #{nandu,jdbcType=VARCHAR}, #{referenceTime,jdbcType=INTEGER}, #{years,jdbcType=VARCHAR},
       #{city,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, #{problem,jdbcType=VARCHAR}, 
       #{answer,jdbcType=VARCHAR}, #{analysis,jdbcType=VARCHAR}, #{commitTime,jdbcType=TIMESTAMP}
       )
