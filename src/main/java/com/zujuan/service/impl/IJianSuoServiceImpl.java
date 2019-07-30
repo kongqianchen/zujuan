@@ -9,6 +9,7 @@ import com.zujuan.service.IJianSuoService;
 import com.zujuan.service.IZhiShiDianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
@@ -80,11 +81,6 @@ public class IJianSuoServiceImpl implements IJianSuoService {
         return ServerResponse.createBySuccess("更新检索成功", jianSuo);
     }
 
-/*
-    public ServerResponse<List<JianSuo>> queryJianSuo() {
-
-    }*/
-
     /**
      * 删除检索
      *
@@ -99,4 +95,8 @@ public class IJianSuoServiceImpl implements IJianSuoService {
         }
         return ServerResponse.createBySuccessMessage("删除检索成功");
     }
+    /*
+    public ServerResponse<List<JianSuo>> queryJianSuo() {
+
+    }*/
 }

@@ -87,7 +87,7 @@
   <select id="selectZhiShiDinaChildrenByParentId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select
     <include refid="Base_Column_List"></include>
-    from tb_zsd
+    from tb_zhishidian
     where parent_id = #{parent_id}
   </select>
 </mapper>

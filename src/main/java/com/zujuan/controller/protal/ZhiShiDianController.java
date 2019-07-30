@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -44,7 +46,7 @@ public class ZhiShiDianController {
      */
     @RequestMapping("getAll.do")
     @ResponseBody
-    public ServerResponse<List<Integer>> selectZhiShiDianAndChildrenById(Integer pointId) {
+    public ServerResponse<Set<ZhiShiDian>> selectZhiShiDianAndChildrenById(Integer pointId) {
         return iZhiShiDianService.selectZhiShiDianAndChildrenById(pointId);
     }
 
@@ -72,7 +74,15 @@ public class ZhiShiDianController {
         return iZhiShiDianService.updateZhiShiDian(zhiShiDian);
     }
 
-    public ServerResponse delectZhiShiDianById(Integer pointId) {
-        return iZhiShiDianService.delectZhiShiDianById(pointId);
+    /**
+     * 删除知识点
+     *
+     * @param pointId
+     * @return
+     */
+    @RequestMapping("deleteZSD.do")
+    @ResponseBody
+    public ServerResponse deleteZhiShiDianById(Integer pointId) {
+        return iZhiShiDianService.deleteZhiShiDianById(pointId);
     }
 }

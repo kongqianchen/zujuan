@@ -94,15 +94,27 @@ public class IZhiShiDianServiceImpl implements IZhiShiDianService {
      * @return
      */
     @Override
-    public ServerResponse delectZhiShiDianById(Integer pointId) {
+    public ServerResponse deleteZhiShiDianById(Integer pointId) {
+        ZhiShiDian zhiShiDian = zhiShiDianMapper.selectByPrimaryKey(pointId);
+        if (zhiShiDian == null) {
+            return ServerResponse.createByErrorMessage("删除知识点失败");
+        }
+        Integer parentId = zhiShiDian.getParentId();
+        // 集合为空直接删除
         List<ZhiShiDian> zhiShiDianList = getChildrenParallelZhiShiDian(pointId).getData();
+        int resultCount = zhiShiDianMapper.deleteByPrimaryKey(pointId);
+        if (CollectionUtils.isEmpty(zhiShiDianList)) {
+            if (resultCount <= 0) {
+                return ServerResponse.createByErrorMessage("删除知识点失败");
+            }
+            return ServerResponse.createBySuccess("删除知识点成功");
+        }
 
-        // todo 查询该节点是否有父节点
-
-        // todo 如果存在，则遍历将list,将list中的节点的父节点设置为当前节点的父节点
-
-        // todo 如果没有,则设置为0
-        return ServerResponse.createBySuccess();
+        for (ZhiShiDian zhiShiDianItem : zhiShiDianList) {
+            zhiShiDianItem.setParentId(parentId);
+            zhiShiDianMapper.updateByPrimaryKeySelective(zhiShiDianItem);
+        }
+        return ServerResponse.createBySuccess("删除知识点成功");
     }
 
     /**
@@ -127,17 +139,13 @@ public class IZhiShiDianServiceImpl implements IZhiShiDianService {
      * @return
      */
     @Override
-    public ServerResponse<List<Integer>> selectZhiShiDianAndChildrenById(Integer pointId) {
+    public ServerResponse<Set<ZhiShiDian>> selectZhiShiDianAndChildrenById(Integer pointId) {
         Set<ZhiShiDian> zhiShiDianSet = Sets.newHashSet();
         findChildCategory(zhiShiDianSet, pointId);
-
-        List<Integer> pointIdList = Lists.newArrayList();
-        if (pointId != null) {
-            for (ZhiShiDian zhiShiDian : zhiShiDianSet) {
-                pointIdList.add(zhiShiDian.getPointId());
-            }
+        if (CollectionUtils.isEmpty(zhiShiDianSet)) {
+            logger.info("未找到当前分类的子分类");
         }
-        return ServerResponse.createBySuccess(pointIdList);
+        return ServerResponse.createBySuccess(zhiShiDianSet);
     }
 
     /**

@@ -46,11 +46,7 @@ public class JianSuoManageController {
     /**
      * 新增检索
      *
-     * @param dengji
-     * @param xueke
-     * @param nianji
-     * @param zhangjie
-     * @param pointName
+     * @param jianSuo
      * @return
      */
     @RequestMapping(value = "addJianSuo.do", method = RequestMethod.POST)
