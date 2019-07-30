@@ -4,9 +4,13 @@ import com.zujuan.common.ServerResponse;
 import com.zujuan.pojo.JianSuo;
 import com.zujuan.service.IJianSuoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Guojian Wang
@@ -34,7 +38,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * ━━━━━━感觉萌萌哒━━━━━━
  */
 @Controller
-@RequestMapping("/manage")
+@RequestMapping("/manage/")
 public class JianSuoManageController {
     @Autowired
     IJianSuoService iJianSuoService;
@@ -49,10 +53,10 @@ public class JianSuoManageController {
      * @param pointName
      * @return
      */
-    @RequestMapping(value = "/addJianSuo.do", method = RequestMethod.POST)
-    public ServerResponse<JianSuo> addJianSuo(String dengji, String xueke, String nianji,
-                                              String zhangjie, String pointName) {
-        return iJianSuoService.addJianSuo(dengji, xueke, nianji, zhangjie, pointName);
+    @RequestMapping(value = "addJianSuo.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<JianSuo> addJianSuo(JianSuo jianSuo) {
+        return iJianSuoService.addJianSuo(jianSuo);
     }
 
     /**
@@ -61,7 +65,21 @@ public class JianSuoManageController {
      * @param jianSuo
      * @return
      */
+    @RequestMapping(value = "updateJianSuo.do", method = RequestMethod.POST)
+    @ResponseBody
     public ServerResponse<JianSuo> updateJianSuo(JianSuo jianSuo) {
         return iJianSuoService.updateJianSuo(jianSuo);
+    }
+
+    /**
+     * 删除检索
+     *
+     * @param jianSuoId
+     * @return
+     */
+    @RequestMapping("deleteJianSuo.do")
+    @ResponseBody
+    public ServerResponse deleteJianSuo(Integer jianSuoId) {
+        return iJianSuoService.deleteJianSuo(jianSuoId);
     }
 }

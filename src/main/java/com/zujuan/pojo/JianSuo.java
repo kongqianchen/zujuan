@@ -13,8 +13,6 @@ public class JianSuo {
 
     private Integer pointId;
 
-    private String pointName;
-
     public Integer getJiansuoId() {
         return jiansuoId;
     }
@@ -63,11 +61,4 @@ public class JianSuo {
         this.pointId = pointId;
     }
 
-    public String getPointName() {
-        return pointName;
-    }
-
-    public void setPointName(String pointName) {
-        this.pointName = pointName;
-    }
 }

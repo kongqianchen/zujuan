@@ -23,7 +23,7 @@
     where point_id = #{pointId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zujuan.pojo.ZhiShiDian" useGeneratedKeys="true"
-          keyProperty="point_id" >
+          keyProperty="pointId" keyColumn="point_id">
     insert into tb_zhishidian (point_id, parent_id, point_name, 
       status_result)
     values (#{pointId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{pointName,jdbcType=VARCHAR}, 

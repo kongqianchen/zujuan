@@ -9,11 +9,10 @@
       <arg column="nianji" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="zhangjie" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="point_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="point_name" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List">
-    jiansuo_id, dengji, xueke, nianji, zhangjie, point_id, point_name
+    jiansuo_id, dengji, xueke, nianji, zhangjie, point_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -25,13 +24,13 @@
     delete from tb_jiansuo
     where jiansuo_id = #{jiansuoId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zujuan.pojo.JianSuo">
+  <insert id="insert" parameterType="com.zujuan.pojo.JianSuo" useGeneratedKeys="true"
+          keyProperty="jiansuoId" keyColumn="jiansuo_id">
     insert into tb_jiansuo (jiansuo_id, dengji, xueke, 
-      nianji, zhangjie, point_id, point_name
+      nianji, zhangjie, point_id
       )
     values (#{jiansuoId,jdbcType=INTEGER}, #{dengji,jdbcType=VARCHAR}, #{xueke,jdbcType=VARCHAR}, 
-      #{nianji,jdbcType=VARCHAR}, #{zhangjie,jdbcType=VARCHAR}, #{pointId,jdbcType=INTEGER},
-      #{pointName,jdbcType=VARCHAR}
+      #{nianji,jdbcType=VARCHAR}, #{zhangjie,jdbcType=VARCHAR}, #{pointId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zujuan.pojo.JianSuo">
@@ -53,10 +52,7 @@
         zhangjie,
       </if>
       <if test="pointId != null">
-        point_id,
-      </if>
-      <if test="pointName != null">
-        point_name
+        point_id
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -76,10 +72,7 @@
         #{zhangjie,jdbcType=VARCHAR},
       </if>
       <if test="pointId != null">
-        #{pointId,jdbcType=INTEGER},
-      </if>
-      <if test="pointName != null">
-        #{pointName,jdbcType=VARCHAR}
+        #{pointId,jdbcType=INTEGER}
       </if>
     </trim>
   </insert>
@@ -99,10 +92,7 @@
         zhangjie = #{zhangjie,jdbcType=VARCHAR},
       </if>
       <if test="pointId != null">
-        point_id = #{pointId,jdbcType=INTEGER},
-      </if>
-      <if test="pointName != null">
-        point_name = #{pointName,jdbcType=VARCHAR}
+        point_id = #{pointId,jdbcType=INTEGER}
       </if>
     </set>
     where jiansuo_id = #{jiansuoId,jdbcType=INTEGER}
@@ -113,8 +103,17 @@
       xueke = #{xueke,jdbcType=VARCHAR},
       nianji = #{nianji,jdbcType=VARCHAR},
       zhangjie = #{zhangjie,jdbcType=VARCHAR},
-      point_id = #{pointId,jdbcType=INTEGER},
-      point_name = #{pointName, jdbcType=VARCHAR}
+      point_id = #{pointId,jdbcType=INTEGER}
     where jiansuo_id = #{jiansuoId,jdbcType=INTEGER}
   </update>
+  <select id="queryJiansuo" parameterType="com.zujuan.pojo.JianSuo" >
+    select
+
+    from tb_jiansuo
+    where dengji = #{dengji,jdbcType=VARCHAR}
+    and  xueke = #{xueke,jdbcType=VARCHAR}
+    and nianji = #{nianji,jdbcType=VARCHAR}
+    and  zhangjie = #{zhangjie,jdbcType=VARCHAR}
+
+  </select>
 </mapper>

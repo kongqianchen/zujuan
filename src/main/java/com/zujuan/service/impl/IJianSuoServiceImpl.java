@@ -2,12 +2,13 @@ package com.zujuan.service.impl;
 
 import com.zujuan.common.ServerResponse;
 import com.zujuan.dao.JianSuoMapper;
+import com.zujuan.dao.ZhiShiDianMapper;
 import com.zujuan.pojo.JianSuo;
+import com.zujuan.pojo.ZhiShiDian;
 import com.zujuan.service.IJianSuoService;
 import com.zujuan.service.IZhiShiDianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 /**
@@ -44,33 +45,23 @@ public class IJianSuoServiceImpl implements IJianSuoService {
     @Autowired
     IZhiShiDianService iZhiShiDianService;
 
+    @Autowired
+    ZhiShiDianMapper zhiShiDianMapper;
+
     /**
      * 新增检索
      *
-     * @param dengji
-     * @param xueke
-     * @param nianji
-     * @param zhangjie
-     * @param pointName
+     * @param jianSuo
      * @return
      */
     @Override
-    public ServerResponse<JianSuo> addJianSuo(String dengji, String xueke, String nianji,
-                                              String zhangjie, String pointName) {
-        int pointId = iZhiShiDianService.addZhiShiDian(pointName).getData().getPointId();
-
-        JianSuo jianSuo = new JianSuo();
-        jianSuo.setDengji(dengji);
-        jianSuo.setXueke(xueke);
-        jianSuo.setNianji(nianji);
-        jianSuo.setZhangjie(zhangjie);
-        jianSuo.setPointName(pointName);
-        jianSuo.setPointId(pointId);
+    public ServerResponse<JianSuo> addJianSuo(JianSuo jianSuo) {
+        ZhiShiDian zhiShiDian = zhiShiDianMapper.selectByPrimaryKey(jianSuo.getPointId());
         int resultCount = jianSuoMapper.insert(jianSuo);
-        if (resultCount <= 0) {
-            return ServerResponse.createByErrorMessage("添加检索失败");
+        if (resultCount <= 0 || zhiShiDian == null) {
+            return ServerResponse.createByErrorMessage("新增检索失败");
         }
-        return ServerResponse.createBySuccess("添加检索成功", jianSuo);
+        return ServerResponse.createBySuccess("新增检索成功", jianSuo);
     }
 
     /**
@@ -81,19 +72,31 @@ public class IJianSuoServiceImpl implements IJianSuoService {
      */
     @Override
     public ServerResponse<JianSuo> updateJianSuo(JianSuo jianSuo) {
-        JianSuo updateJianSuo = new JianSuo();
-        updateJianSuo.setDengji(jianSuo.getDengji());
-        updateJianSuo.setNianji(jianSuo.getNianji());
-        updateJianSuo.setPointId(jianSuo.getPointId());
-        updateJianSuo.setXueke(jianSuo.getXueke());
-        updateJianSuo.setZhangjie(jianSuo.getZhangjie());
-        int updateCount = jianSuoMapper.updateByPrimaryKeySelective(updateJianSuo);
-        iZhiShiDianService.updateZhiShiDian(jianSuo.getPointId(), jianSuo.getPointName());
-        if (updateCount <= 0) {
+        int updateCount = jianSuoMapper.updateByPrimaryKeySelective(jianSuo);
+        ZhiShiDian zhiShiDian = zhiShiDianMapper.selectByPrimaryKey(jianSuo.getPointId());
+        if (updateCount <= 0 || zhiShiDian == null) {
             return ServerResponse.createByErrorMessage("更新检索失败");
         }
         return ServerResponse.createBySuccess("更新检索成功", jianSuo);
     }
 
-    public ServerResponse<List<JianSuo>> queryJianSuo()
+/*
+    public ServerResponse<List<JianSuo>> queryJianSuo() {
+
+    }*/
+
+    /**
+     * 删除检索
+     *
+     * @param jianSuoId
+     * @return
+     */
+    @Override
+    public ServerResponse deleteJianSuo(Integer jianSuoId) {
+        int resultCount = jianSuoMapper.deleteByPrimaryKey(jianSuoId);
+        if (resultCount <= 0) {
+            return ServerResponse.createByErrorMessage("删除检索失败");
+        }
+        return ServerResponse.createBySuccessMessage("删除检索成功");
+    }
 }

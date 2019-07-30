@@ -67,31 +67,22 @@ public class IZhiShiDianServiceImpl implements IZhiShiDianService {
         zhiShiDian.setStatusResult(false);
         int rowCount = zhiShiDianMapper.insert(zhiShiDian);
         if (rowCount <= 0) {
-            return ServerResponse.createByErrorMessage("添加知识点成功");
+            return ServerResponse.createByErrorMessage("添加知识点失败");
         }
-        return ServerResponse.createBySuccess("添加知识点失败", zhiShiDian);
+        return ServerResponse.createBySuccess("添加知识点成功", zhiShiDian);
     }
 
     /**
      * 更新知识点
-     * todo 用户权限判断
      *
-     * @param pointId
-     * @param pointName
+     * @param zhiShiDian
      * @return
      */
     @Override
-    public ServerResponse updateZhiShiDian(Integer pointId, String pointName) {
-        if (pointId == null || StringUtils.isBlank(pointName)) {
-            return ServerResponse.createByErrorMessage("更新知识点参数错误");
-        }
-        ZhiShiDian zhiShiDian = new ZhiShiDian();
-        zhiShiDian.setPointId(pointId);
-        zhiShiDian.setPointName(pointName);
-
+    public ServerResponse<ZhiShiDian> updateZhiShiDian(ZhiShiDian zhiShiDian) {
         int rowCount = zhiShiDianMapper.updateByPrimaryKeySelective(zhiShiDian);
         if (rowCount > 0) {
-            return ServerResponse.createBySuccess("更新知识点名字成功");
+            return ServerResponse.createBySuccess("更新知识点名字成功", zhiShiDian);
         }
         return ServerResponse.createByErrorMessage("更新知识点名字失败");
     }

@@ -29,10 +29,9 @@ import com.zujuan.pojo.JianSuo;
  * ━━━━━━感觉萌萌哒━━━━━━
  */
 public interface IJianSuoService {
-    ServerResponse<JianSuo> addJianSuo(String dengji, String xueke, String nianji,
-                                       String zhangjie, String pointName);
-
-    ServerResponse deleteJianSuo(Integer jianSuoId);
+    ServerResponse addJianSuo(JianSuo jianSuo);
 
     ServerResponse<JianSuo> updateJianSuo(JianSuo jianSuo);
+
+    ServerResponse deleteJianSuo(Integer jianSuoId);
 }

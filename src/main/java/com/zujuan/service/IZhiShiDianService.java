@@ -12,7 +12,7 @@ import java.util.List;
 public interface IZhiShiDianService {
     ServerResponse<ZhiShiDian> addZhiShiDian(String pointName);
 
-    ServerResponse updateZhiShiDian(Integer pointId, String pointName);
+    ServerResponse<ZhiShiDian> updateZhiShiDian(ZhiShiDian zhiShiDian);
 
     ServerResponse<List<ZhiShiDian>> getChildrenParallelZhiShiDian(Integer pointId);
 
