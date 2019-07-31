@@ -16,7 +16,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_STRING" value="-encoding utf-8" />
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="zujuan" options="-extdirs D:\DeveloperTools\WGJ\Java_WorkSpace\zujuan/src/main/webapp/WEB-INF/lib" />
+      <module name="zujuan" options="-extdirs &quot;D:\Program Files\IDEA_workspace\zujuan/src/main/webapp/WEB-INF/lib&quot;" />
     </option>
   </component>
 </project>
