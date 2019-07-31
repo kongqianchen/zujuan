@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zujuan.dao.TiJuanMapper">
+  <resultMap id="BaseResultMap" type="com.zujuan.pojo.TiJuan">
+    <constructor>
+      <idArg column="shiti_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <idArg column="shijuan_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="zujuan_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="ques_number" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="fraction" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    shiti_id, shijuan_id, zujuan_time, ques_number, fraction
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.zujuan.pojo.TiJuanKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_tijuan
+    where shiti_id = #{shitiId,jdbcType=INTEGER}
+      and shijuan_id = #{shijuanId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.zujuan.pojo.TiJuanKey">
+    delete from tb_tijuan
+    where shiti_id = #{shitiId,jdbcType=INTEGER}
+      and shijuan_id = #{shijuanId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zujuan.pojo.TiJuan">
+    insert into tb_tijuan (shiti_id, shijuan_id, zujuan_time, 
+      ques_number, fraction)
+    values (#{shitiId,jdbcType=INTEGER}, #{shijuanId,jdbcType=INTEGER}, #{zujuanTime,jdbcType=TIMESTAMP}, 
+      #{quesNumber,jdbcType=INTEGER}, #{fraction,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zujuan.pojo.TiJuan">
+    insert into tb_tijuan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shitiId != null">
+        shiti_id,
+      </if>
+      <if test="shijuanId != null">
+        shijuan_id,
+      </if>
+      <if test="zujuanTime != null">
+        zujuan_time,
+      </if>
+      <if test="quesNumber != null">
+        ques_number,
+      </if>
+      <if test="fraction != null">
+        fraction,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shitiId != null">
+        #{shitiId,jdbcType=INTEGER},
+      </if>
+      <if test="shijuanId != null">
+        #{shijuanId,jdbcType=INTEGER},
+      </if>
+      <if test="zujuanTime != null">
+        #{zujuanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="quesNumber != null">
+        #{quesNumber,jdbcType=INTEGER},
+      </if>
+      <if test="fraction != null">
+        #{fraction,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zujuan.pojo.TiJuan">
+    update tb_tijuan
+    <set>
+      <if test="zujuanTime != null">
+        zujuan_time = #{zujuanTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="quesNumber != null">
+        ques_number = #{quesNumber,jdbcType=INTEGER},
+      </if>
+      <if test="fraction != null">
+        fraction = #{fraction,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where shiti_id = #{shitiId,jdbcType=INTEGER}
+      and shijuan_id = #{shijuanId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zujuan.pojo.TiJuan">
+    update tb_tijuan
+    set zujuan_time = #{zujuanTime,jdbcType=TIMESTAMP},
+      ques_number = #{quesNumber,jdbcType=INTEGER},
+      fraction = #{fraction,jdbcType=DECIMAL}
+    where shiti_id = #{shitiId,jdbcType=INTEGER}
+      and shijuan_id = #{shijuanId,jdbcType=INTEGER}
+  </update>
+</mapper>

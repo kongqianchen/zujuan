@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zujuan.dao.LongContentMapper">
+  <resultMap id="BaseResultMap" type="com.zujuan.pojo.LongContent">
+    <constructor>
+      <idArg column="zhizhen_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.zujuan.pojo.LongContent">
+    <constructor>
+      <idArg column="zhizhen_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="content" javaType="_byte[]" jdbcType="LONGVARBINARY" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    zhizhen_id
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_longcontent
+    where zhizhen_id = #{zhizhenId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_longcontent
+    where zhizhen_id = #{zhizhenId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zujuan.pojo.LongContent">
+    insert into tb_longcontent (zhizhen_id, content)
+    values (#{zhizhenId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARBINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zujuan.pojo.LongContent">
+    insert into tb_longcontent
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="zhizhenId != null">
+        zhizhen_id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="zhizhenId != null">
+        #{zhizhenId,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zujuan.pojo.LongContent">
+    update tb_longcontent
+    <set>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where zhizhen_id = #{zhizhenId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zujuan.pojo.LongContent">
+    update tb_longcontent
+    set content = #{content,jdbcType=LONGVARBINARY}
+    where zhizhen_id = #{zhizhenId,jdbcType=INTEGER}
+  </update>
+</mapper>

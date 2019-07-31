@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zujuan.dao.JianSuoMapper">
+  <resultMap id="BaseResultMap" type="com.zujuan.pojo.JianSuo">
+    <constructor>
+      <idArg column="jiansuo_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="dengji" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="xueke" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="nianji" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="zhangjie" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="point_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    jiansuo_id, dengji, xueke, nianji, zhangjie, point_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_jiansuo
+    where jiansuo_id = #{jiansuoId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_jiansuo
+    where jiansuo_id = #{jiansuoId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zujuan.pojo.JianSuo" useGeneratedKeys="true"
+          keyProperty="jiansuoId" keyColumn="jiansuo_id">
+    insert into tb_jiansuo (jiansuo_id, dengji, xueke, 
+      nianji, zhangjie, point_id
+      )
+    values (#{jiansuoId,jdbcType=INTEGER}, #{dengji,jdbcType=VARCHAR}, #{xueke,jdbcType=VARCHAR}, 
+      #{nianji,jdbcType=VARCHAR}, #{zhangjie,jdbcType=VARCHAR}, #{pointId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zujuan.pojo.JianSuo">
+    insert into tb_jiansuo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="jiansuoId != null">
+        jiansuo_id,
+      </if>
+      <if test="dengji != null">
+        dengji,
+      </if>
+      <if test="xueke != null">
+        xueke,
+      </if>
+      <if test="nianji != null">
+        nianji,
+      </if>
+      <if test="zhangjie != null">
+        zhangjie,
+      </if>
+      <if test="pointId != null">
+        point_id
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="jiansuoId != null">
+        #{jiansuoId,jdbcType=INTEGER},
+      </if>
+      <if test="dengji != null">
+        #{dengji,jdbcType=VARCHAR},
+      </if>
+      <if test="xueke != null">
+        #{xueke,jdbcType=VARCHAR},
+      </if>
+      <if test="nianji != null">
+        #{nianji,jdbcType=VARCHAR},
+      </if>
+      <if test="zhangjie != null">
+        #{zhangjie,jdbcType=VARCHAR},
+      </if>
+      <if test="pointId != null">
+        #{pointId,jdbcType=INTEGER}
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zujuan.pojo.JianSuo">
+    update tb_jiansuo
+    <set>
+      <if test="dengji != null">
+        dengji = #{dengji,jdbcType=VARCHAR},
+      </if>
+      <if test="xueke != null">
+        xueke = #{xueke,jdbcType=VARCHAR},
+      </if>
+      <if test="nianji != null">
+        nianji = #{nianji,jdbcType=VARCHAR},
+      </if>
+      <if test="zhangjie != null">
+        zhangjie = #{zhangjie,jdbcType=VARCHAR},
+      </if>
+      <if test="pointId != null">
+        point_id = #{pointId,jdbcType=INTEGER}
+      </if>
+    </set>
+    where jiansuo_id = #{jiansuoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zujuan.pojo.JianSuo">
+    update tb_jiansuo
+    set dengji = #{dengji,jdbcType=VARCHAR},
+      xueke = #{xueke,jdbcType=VARCHAR},
+      nianji = #{nianji,jdbcType=VARCHAR},
+      zhangjie = #{zhangjie,jdbcType=VARCHAR},
+      point_id = #{pointId,jdbcType=INTEGER}
+    where jiansuo_id = #{jiansuoId,jdbcType=INTEGER}
+  </update>
+  <select id="queryJiansuo" parameterType="com.zujuan.pojo.JianSuo" >
+    select
+
+    from tb_jiansuo
+    where dengji = #{dengji,jdbcType=VARCHAR}
+    and  xueke = #{xueke,jdbcType=VARCHAR}
+    and nianji = #{nianji,jdbcType=VARCHAR}
+    and  zhangjie = #{zhangjie,jdbcType=VARCHAR}
+
+  </select>
+</mapper>

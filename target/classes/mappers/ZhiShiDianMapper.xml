@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zujuan.dao.ZhiShiDianMapper">
+  <resultMap id="BaseResultMap" type="com.zujuan.pojo.ZhiShiDian">
+    <constructor>
+      <idArg column="point_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="parent_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="point_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="status_result" javaType="java.lang.Boolean" jdbcType="BIT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    point_id, parent_id, point_name, status_result
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_zhishidian
+    where point_id = #{pointId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_zhishidian
+    where point_id = #{pointId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zujuan.pojo.ZhiShiDian" useGeneratedKeys="true"
+          keyProperty="pointId" keyColumn="point_id">
+    insert into tb_zhishidian (point_id, parent_id, point_name, 
+      status_result)
+    values (#{pointId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{pointName,jdbcType=VARCHAR}, 
+      #{statusResult,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zujuan.pojo.ZhiShiDian" keyColumn="pointId" useGeneratedKeys="true">
+    insert into tb_zhishidian
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pointId != null">
+        point_id,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="pointName != null">
+        point_name,
+      </if>
+      <if test="statusResult != null">
+        status_result,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pointId != null">
+        #{pointId,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="pointName != null">
+        #{pointName,jdbcType=VARCHAR},
+      </if>
+      <if test="statusResult != null">
+        #{statusResult,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zujuan.pojo.ZhiShiDian">
+    update tb_zhishidian
+    <set>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="pointName != null">
+        point_name = #{pointName,jdbcType=VARCHAR},
+      </if>
+      <if test="statusResult != null">
+        status_result = #{statusResult,jdbcType=BIT},
+      </if>
+    </set>
+    where point_id = #{pointId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.zujuan.pojo.ZhiShiDian">
+    update tb_zhishidian
+    set parent_id = #{parentId,jdbcType=INTEGER},
+      point_name = #{pointName,jdbcType=VARCHAR},
+      status_result = #{statusResult,jdbcType=BIT}
+    where point_id = #{pointId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectZhiShiDinaChildrenByParentId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List"></include>
+    from tb_zhishidian
+    where parent_id = #{parent_id}
+  </select>
+</mapper>
