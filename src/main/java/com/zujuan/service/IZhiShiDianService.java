@@ -22,4 +22,6 @@ public interface IZhiShiDianService {
     ServerResponse<List<String>> queryPointNamesByStr(String pointName);
 
     ServerResponse deleteZhiShiDianById(Integer pointId);
+
+    ServerResponse<List<ZhiShiDian>> queryLonelyPoint();
 }

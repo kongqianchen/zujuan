@@ -85,4 +85,27 @@ public class ZhiShiDianController {
     public ServerResponse deleteZhiShiDianById(Integer pointId) {
         return iZhiShiDianService.deleteZhiShiDianById(pointId);
     }
+
+    /**
+     * 模糊查询知识点
+     *
+     * @param pointName
+     * @return
+     */
+    @RequestMapping("query.do")
+    @ResponseBody
+    public ServerResponse<List<String>> queryPointNamesByStr(String pointName) {
+        return iZhiShiDianService.queryPointNamesByStr(pointName);
+    }
+
+    /**
+     * 查询孤儿节点
+     *
+     * @return
+     */
+    @RequestMapping("queryLonely.do")
+    @ResponseBody
+    public ServerResponse<List<ZhiShiDian>> queryLonelyPoint() {
+        return iZhiShiDianService.queryLonelyPoint();
+    }
 }

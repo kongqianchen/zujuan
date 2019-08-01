@@ -18,4 +18,8 @@ public interface ZhiShiDianMapper {
     int updateByPrimaryKey(ZhiShiDian record);
 
     List<ZhiShiDian> selectZhiShiDinaChildrenByParentId(Integer parent_id);
+
+    List<String> queryPointNamesByStr(String pointName);
+
+    List<ZhiShiDian> queryPointByNullParentId();
 }

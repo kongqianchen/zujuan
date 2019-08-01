@@ -90,4 +90,18 @@
     from tb_zhishidian
     where parent_id = #{parent_id}
   </select>
+
+  <select id="queryPointNamesByStr" resultType="java.lang.String" parameterType="java.lang.String">
+    select distinct
+    point_name
+    from tb_zhishidian
+    where point_name like #{pointName}
+  </select>
+
+  <select id="queryPointByNullParentId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from tb_zhishidian
+    where parent_id is null
+  </select>
 </mapper>

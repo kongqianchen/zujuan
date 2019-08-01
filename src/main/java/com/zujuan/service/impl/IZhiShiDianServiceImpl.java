@@ -1,6 +1,5 @@
 package com.zujuan.service.impl;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.zujuan.common.ServerResponse;
 import com.zujuan.dao.ZhiShiDianMapper;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -35,18 +35,31 @@ public class IZhiShiDianServiceImpl implements IZhiShiDianService {
      */
     @Override
     public ServerResponse<List<String>> queryPointNamesByStr(String pointName) {
-        return ServerResponse.createBySuccess();
+        String name = '%' + pointName  + '%';
+        List<String> pointNames = zhiShiDianMapper.queryPointNamesByStr(name);
+        return ServerResponse.createBySuccess(pointNames);
     }
 
-    /*public ServerResponse queryParentId(String parentName, String pointName) {
-        Integer parentId = zhiShiDianMapper.queryParentId(parentName);
-        if (parentId != null) {
-            addZhiShiDian(pointName, parentId);
+    /**
+     * 查询孤儿节点
+     *
+     * @return
+     */
+    @Override
+    public ServerResponse<List<ZhiShiDian>> queryLonelyPoint() {
+        List<ZhiShiDian> zhiShiDianList = zhiShiDianMapper.queryPointByNullParentId();
+        if (CollectionUtils.isEmpty(zhiShiDianList)) {
+            return ServerResponse.createByErrorMessage("没有孤儿节点");
         }
-        addZhiShiDian(pointName, 0);
-        return ServerResponse.createBySuccess();
-    }*/
-
+        List<ZhiShiDian> lonelyPoint = new ArrayList<>();
+        for (ZhiShiDian zhiShiDianItem : zhiShiDianList) {
+            List<ZhiShiDian> children = getChildrenParallelZhiShiDian(zhiShiDianItem.getPointId()).getData();
+            if (CollectionUtils.isEmpty(children)) {
+                lonelyPoint.add(zhiShiDianItem);
+            }
+        }
+        return ServerResponse.createBySuccess(lonelyPoint);
+    }
 
     /**
      * 添加知识点
