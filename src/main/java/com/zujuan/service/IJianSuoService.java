@@ -3,6 +3,8 @@ package com.zujuan.service;
 import com.zujuan.common.ServerResponse;
 import com.zujuan.pojo.JianSuo;
 
+import java.util.List;
+
 /**
  * @author Guojian Wang
  * @version 1.0
@@ -29,9 +31,13 @@ import com.zujuan.pojo.JianSuo;
  * ━━━━━━感觉萌萌哒━━━━━━
  */
 public interface IJianSuoService {
-    ServerResponse addJianSuo(JianSuo jianSuo);
+    ServerResponse<JianSuo> addJianSuo(JianSuo jianSuo);
 
     ServerResponse<JianSuo> updateJianSuo(JianSuo jianSuo);
 
     ServerResponse deleteJianSuo(Integer jianSuoId);
+
+    ServerResponse<List<JianSuo>> queryAllJianSuo();
+
+    ServerResponse<JianSuo> queryJianSuoById(Integer jianSuoId);
 }

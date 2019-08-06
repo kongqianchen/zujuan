@@ -33,4 +33,5 @@
       #{answer,jdbcType=VARCHAR}, #{analysis,jdbcType=VARCHAR}, #{commitTime,jdbcType=TIMESTAMP}
       )
   </insert>
+
 </mapper>

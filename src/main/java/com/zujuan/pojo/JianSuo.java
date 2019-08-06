@@ -13,6 +13,19 @@ public class JianSuo {
 
     private Integer pointId;
 
+    public JianSuo(Integer jiansuoId, String dengji, String xueke, String nianji, String zhangjie, Integer pointId) {
+        this.jiansuoId = jiansuoId;
+        this.dengji = dengji;
+        this.xueke = xueke;
+        this.nianji = nianji;
+        this.zhangjie = zhangjie;
+        this.pointId = pointId;
+    }
+
+    public JianSuo() {
+        super();
+    }
+
     public Integer getJiansuoId() {
         return jiansuoId;
     }

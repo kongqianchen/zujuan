@@ -2,6 +2,7 @@ package com.zujuan.service;
 
 import com.zujuan.common.ServerResponse;
 import com.zujuan.pojo.ZhiShiDian;
+import com.zujuan.vo.JianSuo_ZhiShiDianVo;
 
 import java.util.List;
 import java.util.Set;
@@ -13,7 +14,7 @@ import java.util.Set;
 public interface IZhiShiDianService {
     ServerResponse<ZhiShiDian> addZhiShiDian(String pointName);
 
-    ServerResponse<ZhiShiDian> updateZhiShiDian(ZhiShiDian zhiShiDian);
+    ServerResponse<ZhiShiDian> updateZhiShiDian(Integer pointId, String pointName);
 
     ServerResponse<List<ZhiShiDian>> getChildrenParallelZhiShiDian(Integer pointId);
 
@@ -24,4 +25,12 @@ public interface IZhiShiDianService {
     ServerResponse deleteZhiShiDianById(Integer pointId);
 
     ServerResponse<List<ZhiShiDian>> queryLonelyPoint();
+
+    ServerResponse<ZhiShiDian> changeParentId(Integer pointId, Integer parentId);
+
+    ServerResponse<List<ZhiShiDian>> queryAll();
+
+    ServerResponse<List<ZhiShiDian>> queryZhiShiDianWithoutJianSuo();
+
+    ServerResponse<List<JianSuo_ZhiShiDianVo>> queryZhiShiDianWithJianSuo();
 }

@@ -2,6 +2,8 @@ package com.zujuan.dao;
 
 import com.zujuan.pojo.JianSuo;
 
+import java.util.List;
+
 public interface JianSuoMapper {
     int deleteByPrimaryKey(Integer jiansuoId);
 
@@ -14,4 +16,6 @@ public interface JianSuoMapper {
     int updateByPrimaryKeySelective(JianSuo record);
 
     int updateByPrimaryKey(JianSuo record);
+
+    List<JianSuo> selectAll();
 }

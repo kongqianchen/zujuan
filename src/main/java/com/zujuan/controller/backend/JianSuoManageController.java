@@ -4,13 +4,12 @@ import com.zujuan.common.ServerResponse;
 import com.zujuan.pojo.JianSuo;
 import com.zujuan.service.IJianSuoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @author Guojian Wang
@@ -38,7 +37,7 @@ import javax.servlet.http.HttpSession;
  * ━━━━━━感觉萌萌哒━━━━━━
  */
 @Controller
-@RequestMapping("/manage/")
+@RequestMapping("/zhishidian/")
 public class JianSuoManageController {
     @Autowired
     IJianSuoService iJianSuoService;
@@ -78,4 +77,28 @@ public class JianSuoManageController {
     public ServerResponse deleteJianSuo(Integer jianSuoId) {
         return iJianSuoService.deleteJianSuo(jianSuoId);
     }
+
+    /**
+     * 查询所有检索
+     *
+     * @return
+     */
+    @RequestMapping("queryAllJiaSuo.do")
+    @ResponseBody
+    public ServerResponse<List<JianSuo>> queryAllJiaSuo() {
+        return iJianSuoService.queryAllJianSuo();
+    }
+
+    /**
+     * 查询检索
+     *
+     * @param jianSuoId
+     * @return
+     */
+    @RequestMapping("queryJianSuoById.do")
+    @ResponseBody
+    public ServerResponse<JianSuo> queryJianSuoById(Integer jianSuoId) {
+        return iJianSuoService.queryJianSuoById(jianSuoId);
+    }
 }
+

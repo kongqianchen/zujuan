@@ -4,11 +4,14 @@ import com.zujuan.common.ServerResponse;
 import com.zujuan.pojo.ZhiShiDian;
 import com.zujuan.service.IUserService;
 import com.zujuan.service.IZhiShiDianService;
+import com.zujuan.vo.JianSuo_ZhiShiDianVo;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -65,13 +68,14 @@ public class ZhiShiDianController {
     /**
      * 更新知识点
      *
-     * @param zhiShiDian
+     * @param pointId
+     * @param pointName
      * @return
      */
     @RequestMapping("updateZSD.do")
     @ResponseBody
-    public ServerResponse updateZhiShiDian(ZhiShiDian zhiShiDian) {
-        return iZhiShiDianService.updateZhiShiDian(zhiShiDian);
+    public ServerResponse updateZhiShiDian(Integer pointId, String pointName) {
+        return iZhiShiDianService.updateZhiShiDian(pointId, pointName);
     }
 
     /**
@@ -103,9 +107,74 @@ public class ZhiShiDianController {
      *
      * @return
      */
-    @RequestMapping("queryLonely.do")
+    @RequestMapping("queryOrphan.do")
     @ResponseBody
     public ServerResponse<List<ZhiShiDian>> queryLonelyPoint() {
         return iZhiShiDianService.queryLonelyPoint();
+    }
+
+    /**
+     * 修改父节点操作
+     *
+     * @param pointId
+     * @param parentId
+     * @return
+     */
+    @RequestMapping("changeParentId.do")
+    @ResponseBody
+    public ServerResponse<ZhiShiDian> changeParentId(Integer pointId, Integer parentId) {
+        return iZhiShiDianService.changeParentId(pointId, parentId);
+    }
+
+    /**
+     * 修改一组节点操作
+     *
+     * @param point_Parent
+     * @return
+     */
+    @RequestMapping("changeMulParentId.do")
+    @ResponseBody
+    public ServerResponse<List<ZhiShiDian>> changeParentId(String point_Parent) {
+        JSONArray jsonArray = JSONArray.fromObject(point_Parent);
+        List<ZhiShiDian> zhiShiDianList = new ArrayList<>();
+        for (int i = 0; i < jsonArray.size(); i++) {
+            Integer pointId = jsonArray.getJSONObject(i).getInt("pointId");
+            Integer parentId = jsonArray.getJSONObject(i).getInt("parentId");
+            zhiShiDianList.add(changeParentId(pointId, parentId).getData());
+        }
+        return ServerResponse.createBySuccess("修改父节点成功", zhiShiDianList);
+    }
+
+    /**
+     * 查询所有知识点
+     *
+     * @return
+     */
+    @RequestMapping("queryAllZSD.do")
+    @ResponseBody
+    public ServerResponse<List<ZhiShiDian>> queryAll() {
+        return iZhiShiDianService.queryAll();
+    }
+
+    /**
+     * 查询没有检索的一级知识点
+     *
+     * @return
+     */
+    @RequestMapping("queryZSDWJS.do")
+    @ResponseBody
+    ServerResponse<List<ZhiShiDian>> queryZhiShiDianWithoutJianSuo() {
+        return iZhiShiDianService.queryZhiShiDianWithoutJianSuo();
+    }
+
+    /**
+     * 查询有检索的一级知识点
+     *
+     * @return
+     */
+    @RequestMapping("queryZSDJS.do")
+    @ResponseBody
+    ServerResponse<List<JianSuo_ZhiShiDianVo>> queryZhiShiDianWithJianSuo() {
+        return iZhiShiDianService.queryZhiShiDianWithJianSuo();
     }
 }

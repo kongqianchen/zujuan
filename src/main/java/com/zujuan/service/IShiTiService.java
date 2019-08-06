@@ -8,7 +8,5 @@ import com.zujuan.pojo.ShiTi;
  * @Date 2019/7/17 12:56
  */
 public interface IShiTiService {
-    ServerResponse<ShiTi> submit(ShiTi shiTi);
-
-
+    ServerResponse submit(ShiTi shiTi);
 }

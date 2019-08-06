@@ -7,13 +7,13 @@ public class ZhiShiDian {
 
     private String pointName;
 
-    private Boolean statusResult;
+    private Integer statusReview;
 
-    public ZhiShiDian(Integer pointId, Integer parentId, String pointName, Boolean statusResult) {
+    public ZhiShiDian(Integer pointId, Integer parentId, String pointName, Integer statusReview) {
         this.pointId = pointId;
         this.parentId = parentId;
         this.pointName = pointName;
-        this.statusResult = statusResult;
+        this.statusReview = statusReview;
     }
 
     public ZhiShiDian() {
@@ -44,11 +44,11 @@ public class ZhiShiDian {
         this.pointName = pointName == null ? null : pointName.trim();
     }
 
-    public Boolean getStatusResult() {
-        return statusResult;
+    public Integer getStatusReview() {
+        return statusReview;
     }
 
-    public void setStatusResult(Boolean statusResult) {
-        this.statusResult = statusResult;
+    public void setStatusReview(Integer statusReview) {
+        this.statusReview = statusReview;
     }
 }

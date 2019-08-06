@@ -71,4 +71,11 @@
     where point_id = #{pointId,jdbcType=INTEGER}
       and shiti_id = #{shitiId,jdbcType=INTEGER}
   </update>
+
+  <select id="queryAllST_ZSDByPointId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List"></include>
+    from tb_st_zsd
+    where point_id = #{pointId}
+  </select>
 </mapper>

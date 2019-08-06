@@ -22,4 +22,8 @@ public interface ZhiShiDianMapper {
     List<String> queryPointNamesByStr(String pointName);
 
     List<ZhiShiDian> queryPointByNullParentId();
+
+    List<ZhiShiDian> queryAll();
+
+    List<ZhiShiDian> queryZhiShiDianWithoutJianSuo();
 }

@@ -9,6 +9,7 @@ import com.zujuan.service.IJianSuoService;
 import com.zujuan.service.IZhiShiDianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -59,8 +60,8 @@ public class IJianSuoServiceImpl implements IJianSuoService {
     public ServerResponse<JianSuo> addJianSuo(JianSuo jianSuo) {
         ZhiShiDian zhiShiDian = zhiShiDianMapper.selectByPrimaryKey(jianSuo.getPointId());
         int resultCount = jianSuoMapper.insert(jianSuo);
-        if (resultCount <= 0 || zhiShiDian == null) {
-            return ServerResponse.createByErrorMessage("新增检索失败");
+        if (resultCount <= 0 || zhiShiDian == null || zhiShiDian.getPointId() != 0) {
+            return ServerResponse.createByErrorMessage("新增检索失败,非根知识点");
         }
         return ServerResponse.createBySuccess("新增检索成功", jianSuo);
     }
@@ -75,7 +76,7 @@ public class IJianSuoServiceImpl implements IJianSuoService {
     public ServerResponse<JianSuo> updateJianSuo(JianSuo jianSuo) {
         int updateCount = jianSuoMapper.updateByPrimaryKeySelective(jianSuo);
         ZhiShiDian zhiShiDian = zhiShiDianMapper.selectByPrimaryKey(jianSuo.getPointId());
-        if (updateCount <= 0 || zhiShiDian == null) {
+        if (updateCount <= 0 || zhiShiDian == null || zhiShiDian.getParentId() == null || zhiShiDian.getParentId() != 0) {
             return ServerResponse.createByErrorMessage("更新检索失败");
         }
         return ServerResponse.createBySuccess("更新检索成功", jianSuo);
@@ -95,8 +96,33 @@ public class IJianSuoServiceImpl implements IJianSuoService {
         }
         return ServerResponse.createBySuccessMessage("删除检索成功");
     }
-    /*
-    public ServerResponse<List<JianSuo>> queryJianSuo() {
 
-    }*/
+    /**
+     * 查找检索
+     *
+     * @param jianSuoId
+     * @return
+     */
+    @Override
+    public ServerResponse<JianSuo> queryJianSuoById(Integer jianSuoId) {
+        JianSuo jianSuo = jianSuoMapper.selectByPrimaryKey(jianSuoId);
+        if (jianSuo == null) {
+            ServerResponse.createByErrorMessage("查找失败");
+        }
+        return ServerResponse.createBySuccess(jianSuo);
+    }
+
+    /**
+     * 显示所有检索
+     *
+     * @return
+     */
+    @Override
+    public ServerResponse<List<JianSuo>> queryAllJianSuo() {
+        List<JianSuo> jianSuoList = jianSuoMapper.selectAll();
+        if (CollectionUtils.isEmpty(jianSuoList)) {
+            ServerResponse.createByErrorMessage("检索表为空");
+        }
+        return ServerResponse.createBySuccess(jianSuoList);
+    }
 }
